@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Doğal Sepetim - Organik Ürünler</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --primary-color: #2e8b57;
+      --secondary-color: #3aa76d;
+      --light-color: #f9f9f9;
+      --dark-color: #333;
+      --gray-color: #ccc;
+      --white-color: #fff;
+      --shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background-color: var(--light-color);
+      color: var(--dark-color);
+    }
+    
+    header, footer, .top-bar {
+      background-color: var(--primary-color);
+      color: var(--white-color);
+      padding: 10px 20px;
+    }
+    
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+    
+    .top-bar p {
+      margin: 0;
+    }
+    
+    .top-bar .user-actions a {
+      color: var(--white-color);
+      margin-left: 15px;
+      text-decoration: none;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo img {
+      margin-right: 10px;
+      border-radius: 50%;
+      width: 40px;
+    }
+    
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+    }
+    
+    nav ul li a {
+      color: var(--white-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    nav ul li a:hover {
+      color: #d1f0de;
+    }
+    
+    .cart-count {
+      background-color: var(--secondary-color);
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+    
+    main {
+      padding: 20px;
+      min-height: calc(100vh - 280px);
+    }
+    
+    .section-title {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background-color: var(--primary-color);
+    }
+    
+    .btn {
+      background-color: var(--primary-color);
+      color: var(--white-color);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    
+    .btn:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+    
+    .btn-outline:hover {
+      background-color: var(--primary-color);
+      color: var(--white-color);
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      color: var(--white-color);
+      text-align: center;
+      padding: 80px 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    
+    .hero h2 {
+      font-size: 36px;
+      margin-bottom: 15px;
+    }
+    
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+    
+    /* Products Section */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 25px;
+    }
+    
+    .product-card {
+      background-color: var(--white-color);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .product-card h3 {
+      margin: 10px 0;
+      color: var(--primary-color);
+    }
+    
+    .product-card .price {
+      font-weight: 600;
+      color: var(--dark-color);
+      margin-bottom: 15px;
+    }
+    
+    .product-card .discount {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: #ff4757;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    /* Forms */
+    .form-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: var(--white-color);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--gray-color);
+      border-radius: 4px;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+    
+    /* Cart */
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background-color: var(--white-color);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow);
+    }
+    
+    .cart-item-info {
+      flex: 1;
+    }
+    
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+    }
+    
+    .cart-item-actions button {
+      background-color: var(--gray-color);
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+    
+    .cart-item-actions .quantity {
+      width: 30px;
+      text-align: center;
+    }
+    
+    .cart-total {
+      text-align: right;
+      font-size: 18px;
+      margin: 20px 0;
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+    
+    .social-links {
+      margin: 15px 0;
+    }
+    
+    .social-links a {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      margin: 0 10px;
+      color: var(--white-color);
+      line-height: 40px;
+      transition: all 0.3s;
+    }
+    
+    .social-links a:hover {
+      background-color: rgba(255,255,255,0.3);
+      transform: translateY(-3px);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      nav ul {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .hero {
+        padding: 50px 20px;
+      }
+      
+      .hero h2 {
+        font-size: 28px;
+      }
+      
+      .hero p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <p><i class="fas fa-phone"></i> 0850 123 45 67 | <i class="fas fa-envelope"></i> info@dogalsepetim.com</p>
+    <div class="user-actions">
+      <a href="#" onclick="showSection('login')"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a>
+      <a href="#" onclick="showSection('register')"><i class="fas fa-user-plus"></i> Kayıt Ol</a>
+    </div>
+  </div>
+
+  <header>
+    <div class="header-content">
+      <div class="logo">
+        <img src="https://storage.kolaysiparis.com.tr/ks-prod/images/shop/63a705bee44a7/logo/wL2XFQL0FUI9dWnOFx6xhDlAQRPSGL6kLkhYbnxH.jpg" alt="Doğal Sepetim Logo" />
+        <h1>Doğal Sepetim</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#" onclick="showSection('home')">Ana Sayfa</a></li>
+          <li><a href="#" onclick="showSection('products')">Ürünler</a></li>
+          <li><a href="#" onclick="showSection('about')">Hakkımızda</a></li>
+          <li><a href="#" onclick="showSection('contact')">İletişim</a></li>
+          <li>
+            <a href="#" onclick="showSection('cart')">
+              <i class="fas fa-shopping-cart"></i> Sepet
+              <span id="cart-count" class="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Ana Sayfa -->
+    <section id="home">
+      <div class="hero">
+        <h2>Doğanın En Lezzetli Hali</h2>
+        <p>%100 organik ve katkısız ürünlerle tanışın</p>
+        <a href="#" class="btn" onclick="showSection('products')">Ürünleri Keşfet</a>
+      </div>
+      
+      <div class="features">
+        <h2 class="section-title">Neden Doğal Sepetim?</h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <i class="fas fa-leaf"></i>
+            <h3>Organik Ürünler</h3>
+            <p>Tamamen doğal yöntemlerle yetiştirilmiş ürünler</p>
+          </div>
+          <div class="feature-card">
+            <i class="fas fa-truck"></i>
+            <h3>Hızlı Teslimat</h3>
+            <p>Siparişleriniz 24 saat içinde kapınızda</p>
+          </div>
+          <div class="feature-card">
+            <i class="fas fa-hand-holding-usd"></i>
+            <h3>Uygun Fiyat</h3>
+            <p>Çiftçiden direkt size, aracısız fiyatlar</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ürünler -->
+    <section id="products" class="hidden">
+      <h2 class="section-title">Ürünlerimiz</h2>
+      
+      <div class="product-filters">
+        <button class="btn active" onclick="filterProducts('all')">Tümü</button>
+        <button class="btn btn-outline" onclick="filterProducts('vegetables')">Sebzeler</button>
+        <button class="btn btn-outline" onclick="filterProducts('fruits')">Meyveler</button>
+        <button class="btn btn-outline" onclick="filterProducts('dairy')">Süt Ürünleri</button>
+      </div>
+      
+      <div class="product-grid" id="product-grid">
+        <!-- Ürünler JavaScript ile eklenecek -->
+      </div>
+    </section>
+
+    <!-- Giriş Formu -->
+    <section id="login" class="hidden">
+      <div class="form-container">
+        <h2 class="section-title">Giriş Yap</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginEmail">E-posta</label>
+            <input type="email" id="loginEmail" class="form-control" placeholder="E-posta adresinizi girin" required />
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Şifre</label>
+            <input type="password" id="loginPassword" class="form-control" placeholder="Şifrenizi girin" required />
+          </div>
+          <button type="submit" class="btn" style="width: 100%;">Giriş Yap</button>
+          <p style="text-align: center; margin-top: 15px;">
+            Henüz üye değil misiniz? <a href="#" onclick="showSection('register')">Kayıt Olun</a>
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Kayıt Formu -->
+    <section id="register" class="hidden">
+      <div class="form-container">
+        <h2 class="section-title">Kayıt Ol</h2>
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="registerName">Ad Soyad</label>
+            <input type="text" id="registerName" class="form-control" placeholder="Ad ve soyadınızı girin" required />
+          </div>
+          <div class="form-group">
+            <label for="registerEmail">E-posta</label>
+            <input type="email" id="registerEmail" class="form-control" placeholder="E-posta adresinizi girin" required />
+          </div>
+          <div class="form-group">
+            <label for="registerPassword">Şifre</label>
+            <input type="password" id="registerPassword" class="form-control" placeholder="Şifrenizi girin" required />
+          </div>
+          <div class="form-group">
+            <label for="registerAddress">Adres</label>
+            <textarea id="registerAddress" class="form-control" placeholder="Teslimat adresinizi girin" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn" style="width: 100%;">Kayıt Ol</button>
+          <p style="text-align: center; margin-top: 15px;">
+            Zaten üye misiniz? <a href="#" onclick="showSection('login')">Giriş Yapın</a>
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Sepet -->
+    <section id="cart" class="hidden">
+      <h2 class="section-title">Sepetiniz</h2>
+      
+      <div id="cart-items">
+        <!-- Sepet öğeleri JavaScript ile eklenecek -->
+        <p id="empty-cart-message" style="text-align: center;">Sepetiniz boş</p>
+      </div>
+      
+      <div class="cart-total">
+        <strong>Toplam: ₺<span id="total">0.00</span></strong>
+      </div>
+      
+      <button class="btn" onclick="checkout()" style="width: 100%;">Siparişi Tamamla</button>
+    </section>
+
+    <!-- Hakkımızda -->
+    <section id="about" class="hidden">
+      <h2 class="section-title">Hakkımızda</h2>
+      <div class="about-content">
+        <p>Doğal Sepetim, 2020 yılında sağlıklı ve organik ürünleri tüketicilerle buluşturmak amacıyla kurulmuş bir girişimdir. Misyonumuz, doğal ve katkısız ürünleri uygun fiyatlarla sizlere ulaştırmaktır.</p>
+        
+        <h3>Vizyonumuz</h3>
+        <p>Sağlıklı nesiller yetiştirmek için organik tarımı desteklemek ve herkesin doğal ürünlere kolayca ulaşabilmesini sağlamak.</p>
+        
+        <h3>Değerlerimiz</h3>
+        <ul>
+          <li>Doğallıktan ödün vermemek</li>
+          <li>Yerel çiftçileri desteklemek</li>
+          <li>Şeffaf ve güvenilir olmak</li>
+          <li>Müşteri memnuniyetini ön planda tutmak</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- İletişim -->
+    <section id="contact" class="hidden">
+      <h2 class="section-title">İletişim</h2>
+      
+      <div class="contact-container">
+        <div class="contact-info">
+          <h3>Bize Ulaşın</h3>
+          <p><i class="fas fa-map-marker-alt"></i> Örnek Mahallesi, Demo Sokak No:123, İstanbul</p>
+          <p><i class="fas fa-phone"></i> 0850 123 45 67</p>
+          <p><i class="fas fa-envelope"></i> info@dogalsepetim.com</p>
+          <p><i class="fas fa-clock"></i> Pazartesi-Cumartesi: 09:00-18:00</p>
+        </div>
+        
+        <div class="contact-form">
+          <h3>Mesaj Gönderin</h3>
+          <form id="contactForm">
+            <div class="form-group">
+              <input type="text" id="contactName" class="form-control" placeholder="Ad Soyad" required />
+            </div>
+            <div class="form-group">
+              <input type="email" id="contactEmail" class="form-control" placeholder="E-posta" required />
+            </div>
+            <div class="form-group">
+              <input type="text" id="contactSubject" class="form-control" placeholder="Konu" />
+            </div>
+            <div class="form-group">
+              <textarea id="contactMessage" class="form-control" placeholder="Mesajınız" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn">Gönder</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.279637145691!2d28.978859315414722!3d41.00890397930037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab9eb9d587135%3A0x8aa0bb6b1dd6ffb7!2s%C4%B0stanbul%2C%20T%C3%BCrkiye!5e0!3m2!1str!2s!4v1620000000000!5m2!1str!2s" width="100%" height="400" style="border:0; border-radius: 10px;" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+    <p>© 2025 Doğal Sepetim - Tüm Hakları Saklıdır.</p>
+  </footer>
+
+  <script>
+    // Kullanıcı oturum durumu
+    let currentUser = null;
+    
+    // Ürün veritabanı
+    const products = [
+      {
+        id: 1,
+        name: "Organik Domates",
+        price: 25,
+        category: "vegetables",
+        image: "https://www.tohumevi.com.tr/idea/kr/53/myassets/products/286/4.jpg?revision=1741258703",
+        description: "Doğal yöntemlerle yetiştirilmiş, tamamen organik domatesler.",
+        discount: 10
+      },
+      {
+        id: 2,
+        name: "Taze Çilek",
+        price: 35,
+        category: "fruits",
+        image: "https://trthaberstatic.cdn.wp.trt.com.tr/resimler/1544000/cilek-aa-1545606.jpg",
+        description: "Yeni hasat, taze ve sulu çilekler."
+      },
+      {
+        id: 3,
+        name: "Organik Salatalık",
+        price: 18,
+        category: "vegetables",
+        image: "https://static.ticimax.cloud/3140/uploads/urunresimleri/buyuk/8d6fafb6-3216-4fa0-9835-62344e5774b8.jpg",
+        description: "Katkısız, doğal yöntemlerle yetiştirilmiş salatalıklar."
+      },
+      {
+        id: 4,
+        name: "Organik Süt",
+        price: 15,
+        category: "dairy",
+        image: "https://i.nefisyemektarifleri.com/2022/10/03/pastorize-sut-nedir-kaynatilir-mi-raf-omru-uht-ile-farki.jpg",
+        description: "Pastörize edilmemiş, tamamen doğal inek sütü.",
+        discount: 15
+      },
+      {
+        id: 5,
+        name: "Organik Yumurta",
+        price: 30,
+        category: "dairy",
+        image: "https://www.ersutorganik.com/images/urunler/30-ADET-KOY-YUMURTASI-resim2-229.jpg",
+        description: "Serbest gezen tavuklardan, organik yemlerle beslenmiş yumurtalar."
+      },
+      {
+        id: 6,
+        name: "Organik Elma",
+        price: 20,
+        category: "fruits",
+        image: "https://static.ticimax.cloud/43437/uploads/urunresimleri/buyuk/organik-elma-a4c0-a.jpg",
+        description: "Doğal yöntemlerle yetiştirilmiş, kırmızı elmalar."
+      }
+    ];
+    
+    // Sepet verisi
+    let cart = [];
+    
+    // Sayfa yüklendiğinde
+    document.addEventListener('DOMContentLoaded', function() {
+      // Ürünleri yükle
+      loadProducts();
+      
+      // Form event listener'ları
+      document.getElementById('loginForm').addEventListener('submit', login);
+      document.getElementById('registerForm').addEventListener('submit', register);
+      document.getElementById('contactForm').addEventListener('submit', sendMessage);
+      
+      // Varsayılan olarak ana sayfayı göster
+      showSection('home');
+    });
+    
+    // Bölüm göster
+    function showSection(id) {
+      document.querySelectorAll("main section").forEach(section => section.classList.add("hidden"));
+      document.getElementById(id).classList.remove("hidden");
+      
+      // Sepet sayfasını gösterirken sepeti güncelle
+      if (id === 'cart') {
+        updateCart();
+      }
+    }
+    
+    // Ürünleri yükle
+    function loadProducts(filter = 'all') {
+      const productGrid = document.getElementById('product-grid');
+      productGrid.innerHTML = '';
+      
+      let filteredProducts = products;
+      if (filter !== 'all') {
+        filteredProducts = products.filter(product => product.category === filter);
+      }
+      
+      filteredProducts.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        
+        let discountBadge = '';
+        if (product.discount) {
+          const discountedPrice = product.price * (1 - product.discount / 100);
+          discountBadge = `<span class="discount">%${product.discount}</span>
+                           <p class="price"><del>₺${product.price.toFixed(2)}</del> ₺${discountedPrice.toFixed(2)}</p>`;
+        } else {
+          discountBadge = `<p class="price">₺${product.price.toFixed(2)}</p>`;
+        }
+        
+        productCard.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" />
+          ${discountBadge}
+          <h3>${product.name}</h3>
+          <p>${product.description}</p>
+          <button class="btn" onclick="addToCart(${product.id})">Sepete Ekle</button>
+        `;
+        
+        productGrid.appendChild(productCard);
+      });
+    }
+    
+    // Ürün filtreleme
+    function filterProducts(category) {
+      loadProducts(category);
+      
+      // Butonları güncelle
+      document.querySelectorAll('.product-filters .btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.classList.add('btn-outline');
+      });
+      
+      const activeBtn = category === 'all' 
+        ? document.querySelector('.product-filters .btn') 
+        : document.querySelector(`.product-filters .btn[onclick="filterProducts('${category}')"]`);
+      
+      activeBtn.classList.add('active');
+      activeBtn.classList.remove('btn-outline');
+    }
+    
+    // Sepete ekle
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      
+      // Ürün sepette var mı kontrol et
+      const existingItem = cart.find(item => item.id === productId);
+      
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: product.discount ? product.price * (1 - product.discount / 100) : product.price,
+          quantity: 1,
+          image: product.image
+        });
+      }
+      
+      // Sepet sayacını güncelle
+      updateCartCount();
+      
+      // Bildirim göster
+      showNotification(`${product.name} sepete eklendi!`);
+    }
+    
+    // Sepetten çıkar
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      updateCart();
+    }
+    
+    // Miktarı güncelle
+    function updateQuantity(productId, change) {
+      const item = cart.find(item => item.id === productId);
+      
+      if (item) {
+        item.quantity += change;
+        
+        if (item.quantity < 1) {
+          removeFromCart(productId);
+        } else {
+          updateCart();
+        }
+      }
+    }
+    
+    // Sepeti güncelle
+    function updateCart() {
+      const cartItems = document.getElementById('cart-items');
+      const emptyCartMessage = document.getElementById('empty-cart-message');
+      const totalElement = document.getElementById('total');
+      
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<p id="empty-cart-message" style="text-align: center;">Sepetiniz boş</p>';
+        totalElement.textContent = '0.00';
+        updateCartCount();
+        return;
+      } else {
+        emptyCartMessage?.remove();
+      }
+      
+      cartItems.innerHTML = '';
+      let total = 0;
+      
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.innerHTML = `
+          <div class="cart-item-info">
+            <h3>${item.name}</h3>
+            <p>₺${item.price.toFixed(2)} x ${item.quantity} = ₺${itemTotal.toFixed(2)}</p>
+          </div>
+          <div class="cart-item-actions">
+            <button onclick="updateQuantity(${item.id}, -1)">-</button>
+            <span class="quantity">${item.quantity}</span>
+            <button onclick="updateQuantity(${item.id}, 1)">+</button>
+            <button onclick="removeFromCart(${item.id})"><i class="fas fa-trash"></i></button>
+          </div>
+        `;
+        
+        cartItems.appendChild(cartItem);
+      });
+      
+      totalElement.textContent = total.toFixed(2);
+      updateCartCount();
+    }
+    
+    // Sepet sayacını güncelle
+    function updateCartCount() {
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cart-count').textContent = count;
+    }
+    
+    // Ödeme işlemi
+    function checkout() {
+      if (cart.length === 0) {
+        alert('Sepetiniz boş!');
+        return;
+      }
+      
+      if (!currentUser) {
+        if (confirm('Sipariş vermek için giriş yapmalısınız. Giriş sayfasına yönlendirilsin mi?')) {
+          showSection('login');
+        }
+        return;
+      }
+      
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      alert(`Siparişiniz alındı! Toplam tutar: ₺${total.toFixed(2)}\nTeslimat adresi: ${currentUser.address}`);
+      
+      // Sepeti temizle
+      cart = [];
+      updateCart();
+    }
+    
+    // Giriş işlemi
+    function login(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      // Basit bir doğrulama
+      if (email && password) {
+        currentUser = {
+          email: email,
+          name: "Demo Kullanıcı",
+          address: "Örnek Mahallesi, Demo Sokak No:123, İstanbul"
+        };
+        
+        showNotification('Başarıyla giriş yaptınız!');
+        showSection('home');
+        
+        // Giriş yapıldığında üst menüyü güncelle
+        document.querySelector('.user-actions').innerHTML = `
+          <span>Hoş geldiniz, ${currentUser.name}</span>
+          <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
+        `;
+      } else {
+        alert('Lütfen tüm alanları doldurun!');
+      }
+    }
+    
+    // Kayıt işlemi
+    function register(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('registerName').value;
+      const email = document.getElementById('registerEmail').value;
+      const password = document.getElementById('registerPassword').value;
+      const address = document.getElementById('registerAddress').value;
+      
+      if (name && email && password) {
+        currentUser = {
+          name: name,
+          email: email,
+          address: address || "Adres belirtilmedi"
+        };
+        
+        showNotification('Kayıt işlemi başarılı! Giriş yaptınız.');
+        showSection('home');
+        
+        // Kayıt olduğunda üst menüyü güncelle
+        document.querySelector('.user-actions').innerHTML = `
+          <span>Hoş geldiniz, ${currentUser.name}</span>
+          <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
+        `;
+      } else {
+        alert('Lütfen zorunlu alanları doldurun!');
+      }
+    }
+    
+    // Çıkış işlemi
+    function logout() {
+      currentUser = null;
+      showNotification('Başarıyla çıkış yaptınız.');
+      
+      // Çıkış yapıldığında üst menüyü güncelle
+      document.querySelector('.user-actions').innerHTML = `
+        <a href="#" onclick="showSection('login')"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a>
+        <a href="#" onclick="showSection('register')"><i class="fas fa-user-plus"></i> Kayıt Ol</a>
+      `;
+    }
+    
+    // Mesaj gönderme
+    function sendMessage(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+      const subject = document.getElementById('contactSubject').value;
+      const message = document.getElementById('contactMessage').value;
+      
+      if (name && email && message) {
+        showNotification('Mesajınız başarıyla gönderildi!');
+        document.getElementById('contactForm').reset();
+      } else {
+        alert('Lütfen zorunlu alanları doldurun!');
+      }
+    }
+    
+    // Bildirim göster
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.style.position = 'fixed';
+      notification.style.bottom = '20px';
+      notification.style.right = '20px';
+      notification.style.backgroundColor = '#2e8b57';
+      notification.style.color = 'white';
+      notification.style.padding = '15px 25px';
+      notification.style.borderRadius = '5px';
+      notification.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+      notification.style.zIndex = '1000';
+      notification.style.animation = 'fadeIn 0.3s';
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.animation = 'fadeOut 0.3s';
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+      
+      // Animasyon stilleri ekle
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOut {
+          from { opacity: 1; transform: translateY(0); }
+          to { opacity: 0; transform: translateY(20px); }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  </script>
+</body>
+</html>
